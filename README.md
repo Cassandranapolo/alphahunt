@@ -4,9 +4,8 @@ Platform komunitas untuk menemukan alpha project DeFi, Memecoin, GameFi & Web3 s
 
 ## 🌐 Live Demo
 
-👉 **[Buka Website](https://USERNAME-ANDA.github.io/alphahunt/)** 
+👉 https://alphahunt-kappa.vercel.app/
 
-(Ganti USERNAME-ANDA dengan username GitHub kamu)
 
 ## ✨ Features
 
@@ -24,20 +23,8 @@ Platform komunitas untuk menemukan alpha project DeFi, Memecoin, GameFi & Web3 s
 - TailwindCSS (via CDN)
 - Pure browser-based (no install needed)
 
-## 🚀 Cara Pakai
-
-1. Buka file `index.html` di browser, atau
-2. Akses live demo di atas
-
-## 📸 Screenshots
-
 Coming soon...
 
-## 🤝 Join Community
-
-- 🐦 Twitter: [@AlphaHunt](#)
-- 💬 Discord: [Join Server](#)
-- 📱 Telegram: [Join Group](#)
 
 ## ⚠️ Disclaimer
 
