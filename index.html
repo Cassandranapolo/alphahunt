@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaHunt - DeFi Degen Alpha Discovery 🚀</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          degen: {
+            green: '#22c55e',
+            red: '#ef4444',
+            gold: '#fbbf24',
+            dark: '#0f172a',
+            card: '#1e293b'
+          }
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, #22c55e 0%, #fbbf24 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0f172a; }
+  ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 4px; }
+  .card-hover:hover {
+    border-color: #22c55e;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+  }
+</style>
+</head>
+<body class="text-white">
+
+<!-- NAVBAR -->
+<nav class="bg-degen-card/50 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50">
+  <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="text-3xl">🚀</span>
+      <span class="text-2xl font-bold gradient-text">AlphaHunt</span>
+    </div>
+    <div class="hidden md:flex items-center gap-6">
+      <a href="#discover" class="hover:text-degen-green transition">🔥 Discover</a>
+      <a href="#leaderboard" class="hover:text-degen-green transition">🏆 Leaderboard</a>
+      <a href="#submit" class="hover:text-degen-green transition">➕ Submit Alpha</a>
+    </div>
+    <button onclick="connectWallet()" class="bg-degen-green hover:bg-green-600 text-black font-bold px-4 py-2 rounded-lg transition">
+      💰 Connect Wallet
+    </button>
+  </div>
+</nav>
+
+<main class="container mx-auto px-4 py-8 space-y-12">
+
+  <!-- HERO -->
+  <section class="text-center py-12">
+    <h1 class="text-5xl md:text-7xl font-bold mb-4">
+      Find Your Next <span class="gradient-text">100x Gem</span>
+    </h1>
+    <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-6">
+      Komunitas degen #1 untuk berburu alpha project sebelum pump 🚀
+    </p>
+    <div class="flex gap-4 justify-center flex-wrap">
+      <button onclick="scrollToSection('discover')" class="bg-degen-green text-black font-bold px-6 py-3 rounded-lg hover:bg-green-600 transition">
+        🔍 Explore Alphas
+      </button>
+      <button onclick="scrollToSection('submit')" class="border-2 border-degen-green text-degen-green font-bold px-6 py-3 rounded-lg hover:bg-degen-green hover:text-black transition">
+        💎 Submit Alpha
+      </button>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="bg-degen-card border border-gray-800 rounded-xl p-4 card-hover transition">
+      <div class="text-3xl mb-2">📈</div>
+      <p class="text-gray-400 text-sm">Active Alphas</p>
+      <p class="text-2xl font-bold">1,247</p>
+    </div>
+    <div class="bg-degen-card border border-gray-800 rounded-xl p-4 card-hover transition">
+      <div class="text-3xl mb-2">👥</div>
+      <p class="text-gray-400 text-sm">Hunters</p>
+      <p class="text-2xl font-bold">8,492</p>
+    </div>
+    <div class="bg-degen-card border border-gray-800 rounded-xl p-4 card-hover transition">
+      <div class="text-3xl mb-2">⚡</div>
+      <p class="text-gray-400 text-sm">Today's Gems</p>
+      <p class="text-2xl font-bold">34</p>
+    </div>
+    <div class="bg-degen-card border border-gray-800 rounded-xl p-4 card-hover transition">
+      <div class="text-3xl mb-2">🏆</div>
+      <p class="text-gray-400 text-sm">Total 100x</p>
+      <p class="text-2xl font-bold">89</p>
+    </div>
+  </section>
+
+  <!-- DISCOVER SECTION -->
+  <section id="discover">
+    <h2 class="text-3xl font-bold mb-6">🔥 Hot Alphas</h2>
+    
+    <!-- Filter -->
+    <div class="bg-degen-card/50 rounded-xl p-4 space-y-3 mb-6">
+      <div class="flex gap-2 flex-wrap">
+        <button onclick="filterAlphas('hot', this)" class="filter-btn active flex items-center gap-2 px-4 py-2 rounded-lg font-semibold bg-degen-green text-black">
+          🔥 Hot
+        </button>
+        <button onclick="filterAlphas('new', this)" class="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg font-semibold bg-gray-800 text-gray-300">
+          🆕 New
+        </button>
+        <button onclick="filterAlphas('trending', this)" class="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg font-semibold bg-gray-800 text-gray-300">
+          📊 Trending
+        </button>
+        <button onclick="filterAlphas('top', this)" class="filter-btn flex items-center gap-2 px-4 py-2 rounded-lg font-semibold bg-gray-800 text-gray-300">
+          ⭐ Top
+        </button>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <button onclick="filterCategory('all', this)" class="cat-btn active px-3 py-1 rounded-full text-sm bg-degen-green/20 text-degen-green border border-degen-green">ALL</button>
+        <button onclick="filterCategory('DeFi', this)" class="cat-btn px-3 py-1 rounded-full text-sm bg-gray-800/50 text-gray-400">DEFI</button>
+        <button onclick="filterCategory('Memecoin', this)" class="cat-btn px-3 py-1 rounded-full text-sm bg-gray-800/50 text-gray-400">MEMECOIN</button>
+        <button onclick="filterCategory('GameFi', this)" class="cat-btn px-3 py-1 rounded-full text-sm bg-gray-800/50 text-gray-400">GAMEFI</button>
+        <button onclick="filterCategory('AI', this)" class="cat-btn px-3 py-1 rounded-full text-sm bg-gray-800/50 text-gray-400">AI</button>
+        <button onclick="filterCategory('NFT', this)" class="cat-btn px-3 py-1 rounded-full text-sm bg-gray-800/50 text-gray-400">NFT</button>
+      </div>
+    </div>
+
+    <!-- Alpha List -->
+    <div id="alphaList" class="space-y-4"></div>
+  </section>
+
+  <!-- SUBMIT SECTION -->
+  <section id="submit" class="max-w-2xl mx-auto">
+    <h2 class="text-3xl font-bold mb-2 gradient-text">💎 Submit Alpha</h2>
+    <p class="text-gray-400 mb-6">Share gem kamu ke komunitas degen!</p>
+    
+    <form onsubmit="submitAlpha(event)" class="space-y-4 bg-degen-card p-6 rounded-xl border border-gray-800">
+      <div>
+        <label class="block mb-2 font-semibold">🏷️ Project Title *</label>
+        <input id="title" type="text" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:border-degen-green outline-none" placeholder="e.g. $PEPE2.0 - The Next 100x Gem">
+      </div>
+      <div>
+        <label class="block mb-2 font-semibold">📝 Description *</label>
+        <textarea id="description" required rows="4" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:border-degen-green outline-none" placeholder="Kenapa ini alpha? Apa yang bikin special?"></textarea>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block mb-2 font-semibold">📂 Category</label>
+          <select id="category" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2">
+            <option>DeFi</option>
+            <option>Memecoin</option>
+            <option>GameFi</option>
+            <option>AI</option>
+            <option>NFT</option>
+            <option>RWA</option>
+          </select>
+        </div>
+        <div>
+          <label class="block mb-2 font-semibold">⛓️ Chain</label>
+          <select id="chain" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2">
+            <option>Ethereum</option>
+            <option>BSC</option>
+            <option>Solana</option>
+            <option>Base</option>
+            <option>Arbitrum</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="block mb-2 font-semibold">📜 Contract Address</label>
+        <input id="contract" type="text" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:border-degen-green outline-none font-mono text-sm" placeholder="0x...">
+      </div>
+      <button type="submit" class="w-full bg-degen-green hover:bg-green-600 text-black font-bold py-3 rounded-lg transition">
+        🚀 Submit Alpha
+      </button>
+    </form>
+  </section>
+
+  <!-- LEADERBOARD -->
+  <section id="leaderboard" class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold mb-2 gradient-text">🏆 Top Alpha Hunters</h2>
+    <p class="text-gray-400 mb-6">Hall of Fame - Most successful degens</p>
+    
+    <div class="bg-degen-card rounded-xl overflow-hidden border border-gray-800">
+      <table class="w-full">
+        <thead class="bg-gray-800">
+          <tr>
+            <th class="text-left p-4">Rank</th>
+            <th class="text-left p-4">Hunter</th>
+            <th class="text-right p-4 hidden md:table-cell">Reputation</th>
+            <th class="text-right p-4">Alphas</th>
+            <th class="text-right p-4">Win Rate</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="text-center py-8 border-t border-gray-800 mt-12">
+    <p class="text-gray-400">Built with ❤️ for the degen community</p>
+    <p class="text-sm text-gray-500 mt-2">© 2025 AlphaHunt. DYOR - Not Financial Advice.</p>
+    <div class="flex gap-4 justify-center mt-4">
+      <a href="#" class="text-degen-green hover:underline">🐦 Twitter</a>
+      <a href="#" class="text-degen-green hover:underline">💬 Discord</a>
+      <a href="#" class="text-degen-green hover:underline">📱 Telegram</a>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+// Sample Data
+let alphas = [
+  {
+    id: 1, title: '🔥 $PEPE2.0 - The Next Memecoin King',
+    description: 'New memecoin on Base with strong community, doxxed team, and locked liquidity. Already 10x in 24h!',
+    category: 'Memecoin', chain: 'Base', riskScore: 65,
+    upvotes: 234, downvotes: 12, comments: 47, submittedBy: 'degen_master', timeAgo: '2h ago'
+  },
+  {
+    id: 2, title: '💎 ZeroLend - LayerZero DeFi Protocol',
+    description: 'Cross-chain lending protocol with airdrop incentives. Backed by major VCs, mainnet launching soon.',
+    category: 'DeFi', chain: 'Ethereum', riskScore: 25,
+    upvotes: 567, downvotes: 23, comments: 89, submittedBy: 'alpha_chad', timeAgo: '5h ago'
+  },
+  {
+    id: 3, title: '🎮 Pixelmon - GameFi Revolution',
+    description: 'AAA-quality blockchain game with NFT integration. Beta testing live, token launch incoming.',
+    category: 'GameFi', chain: 'Arbitrum', riskScore: 45,
+    upvotes: 189, downvotes: 34, comments: 56, submittedBy: 'game_hunter', timeAgo: '8h ago'
+  },
+  {
+    id: 4, title: '🤖 AI Agent Token - $AGENT',
+    description: 'Autonomous AI agents on-chain. Trending narrative dengan strong fundamentals dan growing TVL.',
+    category: 'AI', chain: 'Solana', riskScore: 55,
+    upvotes: 412, downvotes: 45, comments: 78, submittedBy: 'ai_degen', timeAgo: '12h ago'
+  },
+  {
+    id: 5, title: '🌾 YieldMax - 200% APY Stablecoin Farm',
+    description: 'New stablecoin farming protocol dengan sustainable yields. Audited by CertiK, no admin keys.',
+    category: 'DeFi', chain: 'BSC', riskScore: 35,
+    upvotes: 298, downvotes: 18, comments: 42, submittedBy: 'yield_farmer', timeAgo: '1d ago'
+  },
+  {
+    id: 6, title: '🏠 RealEstate DAO - RWA Tokenization',
+    description: 'Tokenize real estate properties dengan rental yield. Regulated, audited, dan partnership dengan major brands.',
+    category: 'RWA', chain: 'Polygon', riskScore: 20,
+    upvotes: 156, downvotes: 8, comments: 34, submittedBy: 'rwa_king', timeAgo: '1d ago'
+  }
+];
+
+let topHunters = [
+  { rank: 1, name: 'alpha_chad', reputation: 9847, alphas: 142, winRate: '78%', icon: '🥇' },
+  { rank: 2, name: 'degen_master', reputation: 8234, alphas: 128, winRate: '72%', icon: '🥈' },
+  { rank: 3, name: 'gem_finder', reputation: 7892, alphas: 115, winRate: '69%', icon: '🥉' },
+  { rank: 4, name: 'crypto_sage', reputation: 6543, alphas: 98, winRate: '65%', icon: '#4' },
+  { rank: 5, name: 'moon_seeker', reputation: 5821, alphas: 87, winRate: '63%', icon: '#5' },
+];
+
+let userVotes = {};
+
+// Render Alpha Cards
+function renderAlphas(filteredAlphas = alphas) {
+  const list = document.getElementById('alphaList');
+  if (filteredAlphas.length === 0) {
+    list.innerHTML = '<p class="text-center text-gray-400 py-8">No alphas found 😢</p>';
+    return;
+  }
+  list.innerHTML = filteredAlphas.map(a => {
+    const riskColor = a.riskScore < 30 ? 'text-degen-green' : a.riskScore < 70 ? 'text-degen-gold' : 'text-degen-red';
+    const voteCount = a.upvotes - a.downvotes;
+    return `
+    <div class="bg-degen-card border border-gray-800 rounded-xl p-5 card-hover transition-all">
+      <div class="flex gap-4">
+        <div class="flex flex-col items-center gap-1 min-w-[50px]">
+          <button onclick="vote(${a.id}, 'up')" class="p-1 rounded hover:bg-degen-green/20 transition text-2xl ${userVotes[a.id] === 'up' ? 'text-degen-green' : 'text-gray-400'}">▲</button>
+          <span class="font-bold text-lg">${voteCount}</span>
+          <button onclick="vote(${a.id}, 'down')" class="p-1 rounded hover:bg-degen-red/20 transition text-2xl ${userVotes[a.id] === 'down' ? 'text-degen-red' : 'text-gray-400'}">▼</button>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-start justify-between mb-2 flex-wrap gap-2">
+            <div>
+              <h3 class="text-xl font-bold hover:text-degen-green cursor-pointer">${a.title}</h3>
+              <div class="flex gap-2 mt-1">
+                <span class="text-xs bg-degen-green/20 text-degen-green px-2 py-1 rounded">${a.category}</span>
+                <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">${a.chain}</span>
+              </div>
+            </div>
+            <div class="${riskColor} flex items-center gap-1">
+              🛡️ <span class="text-sm font-bold">Risk: ${a.riskScore}%</span>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm mb-3">${a.description}</p>
+          <div class="flex items-center justify-between text-sm text-gray-500 flex-wrap gap-2">
+            <div class="flex items-center gap-4 flex-wrap">
+              <span>💬 ${a.comments}</span>
+              <span>by <span class="text-degen-green">@${a.submittedBy}</span></span>
+              <span>⏱️ ${a.timeAgo}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Render Leaderboard
+function renderLeaderboard() {
+  const body = document.getElementById('leaderboardBody');
+  body.innerHTML = topHunters.map(h => `
+    <tr class="border-t border-gray-800 hover:bg-gray-800/50 transition">
+      <td class="p-4 text-2xl">${h.icon}</td>
+      <td class="p-4 font-semibold text-degen-green">@${h.name}</td>
+      <td class="p-4 text-right font-bold hidden md:table-cell">${h.reputation.toLocaleString()}</td>
+      <td class="p-4 text-right">${h.alphas}</td>
+      <td class="p-4 text-right text-degen-green font-bold">${h.winRate}</td>
+    </tr>
+  `).join('');
+}
+
+// Voting
+function vote(id, type) {
+  const alpha = alphas.find(a => a.id === id);
+  const current = userVotes[id];
+  
+  if (current === type) {
+    if (type === 'up') alpha.upvotes--;
+    else alpha.downvotes--;
+    delete userVotes[id];
+  } else {
+    if (current === 'up') alpha.upvotes--;
+    if (current === 'down') alpha.downvotes--;
+    if (type === 'up') alpha.upvotes++;
+    else alpha.downvotes++;
+    userVotes[id] = type;
+  }
+  renderAlphas();
+}
+
+// Filter
+let activeFilter = 'hot';
+let activeCategory = 'all';
+
+function filterAlphas(type, btn) {
+  activeFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.remove('active', 'bg-degen-green', 'text-black');
+    b.classList.add('bg-gray-800', 'text-gray-300');
+  });
+  btn.classList.add('active', 'bg-degen-green', 'text-black');
+  btn.classList.remove('bg-gray-800', 'text-gray-300');
+  applyFilters();
+}
+
+function filterCategory(cat, btn) {
+  activeCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => {
+    b.classList.remove('active', 'bg-degen-green/20', 'text-degen-green', 'border', 'border-degen-green');
+    b.classList.add('bg-gray-800/50', 'text-gray-400');
+  });
+  btn.classList.add('active', 'bg-degen-green/20', 'text-degen-green', 'border', 'border-degen-green');
+  btn.classList.remove('bg-gray-800/50', 'text-gray-400');
+  applyFilters();
+}
+
+function applyFilters() {
+  let filtered = [...alphas];
+  if (activeCategory !== 'all') {
+    filtered = filtered.filter(a => a.category === activeCategory);
+  }
+  if (activeFilter === 'hot') {
+    filtered.sort((a, b) => (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes));
+  } else if (activeFilter === 'new') {
+    filtered.sort((a, b) => b.id - a.id);
+  } else if (activeFilter === 'trending') {
+    filtered.sort((a, b) => b.comments - a.comments);
+  } else if (activeFilter === 'top') {
+    filtered.sort((a, b) => b.upvotes - a.upvotes);
+  }
+  renderAlphas(filtered);
+}
+
+// Submit Alpha
+function submitAlpha(e) {
+  e.preventDefault();
+  const newAlpha = {
+    id: alphas.length + 1,
+    title: document.getElementById('title').value,
+    description: document.getElementById('description').value,
+    category: document.getElementById('category').value,
+    chain: document.getElementById('chain').value,
+    riskScore: Math.floor(Math.random() * 100),
+    upvotes: 1, downvotes: 0, comments: 0,
+    submittedBy: 'you', timeAgo: 'just now'
+  };
+  alphas.unshift(newAlpha);
+  e.target.reset();
+  alert('🚀 Alpha submitted! Check the discover section!');
+  scrollToSection('discover');
+  applyFilters();
+}
+
+// Connect Wallet (Demo)
+function connectWallet() {
+  alert('💰 Wallet connection coming soon!\n\nUntuk versi full, bisa integrasi MetaMask/WalletConnect.');
+}
+
+// Scroll
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Initialize
+renderAlphas();
+renderLeaderboard();
+</script>
+
+</body>
+</html>
